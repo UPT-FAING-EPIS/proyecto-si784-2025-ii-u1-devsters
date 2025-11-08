@@ -66,13 +66,4 @@ proyecto/
 - Gestión de cupos y listas de espera
 - Implementación de Terraform para infraestructura
 
-## Versión 3.0 (Planificada)
-- API REST para integración
-- Aplicación móvil companion
-- Autenticación con OAuth 2.0
-- Blockchain para certificados
-- Integración con sistemas académicos UPT
-- Dashboards analíticos avanzados
-- Migración a contenedores Docker
-
-[Continuar con el resto del documento original...]
+## Versión 3.0 (En planes)
