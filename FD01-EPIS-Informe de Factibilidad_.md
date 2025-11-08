@@ -1,7 +1,6 @@
 ﻿Logo de Mi Empresa		![](Aspose.Words.aba879c8-6b49-4650-a23e-193d434a7555.001.png)
 
 ![./media/media/image1.png](./media/logo-upt.png)
-(Aspose.Words.aba879c8-6b49-4650-a23e-193d434a7555.002.png)
 
 **UNIVERSIDAD PRIVADA DE TACNA**
 
