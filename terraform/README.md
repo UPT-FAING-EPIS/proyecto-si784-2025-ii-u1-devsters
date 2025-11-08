@@ -36,3 +36,40 @@ Notas
 - El archivo `variables.tf` contiene las variables necesarias: `project_id`, `region`, `firestore_location`.
 - No se incluyeron credenciales en el repo. Configura autenticación como se indica arriba.
 - Si quieres usar un backend remoto (ej. GCS) para el estado, puedo agregar un `backend.tf` con la configuración requerida.
+
+Estimación de costos con Infracost
+---------------------------------
+
+Este proyecto incluye un helper para generar una estimación de costos a partir del plan de Terraform usando Infracost.
+
+Requisitos:
+- Tener `terraform` y `infracost` instalados y en el PATH.
+- Configurar la variable de entorno `INFRACOST_API_KEY` (Infracost requiere una API key para obtener precios actualizados). Puedes obtener una clave en la página de Infracost.
+
+Comandos rápidos (PowerShell):
+
+1) Desde la carpeta `terraform` ejecuta:
+
+```powershell
+./cost_estimate.ps1
+```
+
+Esto hará:
+- `terraform init`
+- `terraform plan -out=tfplan`
+- `terraform show -json tfplan > tfplan.json`
+- `infracost breakdown --path=tfplan.json` para generar `infracost.json` y `infracost.txt`.
+- Añadirá la tabla de Infracost al final del archivo `FD01-Informe-Factibilidad.md` en la raíz del repo (si existe). Si el archivo no existe, se creará `terraform/terraform_cost_report.md`.
+
+2) Si prefieres ejecutar los pasos manualmente:
+
+```powershell
+terraform init
+terraform plan -out=tfplan
+terraform show -json tfplan > tfplan.json
+infracost breakdown --path=tfplan.json --format table --no-color > infracost.txt
+```
+
+Notas:
+- No se guardan claves ni secretos en el repositorio.
+- Para uso en CI/CD puedo añadir un workflow (GitHub Actions/GitLab CI) que ejecute Infracost y guarde el resultado como artefacto o lo comente en los PRs.
