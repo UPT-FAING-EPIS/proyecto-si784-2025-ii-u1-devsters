@@ -33,7 +33,6 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
-        run: terraform plan -out=tfplan
+        run: terraform plan -input=false -var="project_id=${{ vars.TF_VAR_PROJECT_ID }}" -out=tfplan
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-          TF_VAR_project_id: sistema-voluntariado-upt
