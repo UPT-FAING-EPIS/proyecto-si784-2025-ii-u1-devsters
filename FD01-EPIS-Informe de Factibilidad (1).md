@@ -1,7 +1,9 @@
-![Logo UPT](media/upt-logo-1.png)		![Logo EPIS](media/epis-logo.png)
+![Logo UPT](media/upt-logo-1.png)		![Logo EPIS](media/epis-logo.png)     ![Encabezado](media/header.png)
 
-![Encabezado](media/header.png)
+
 ![Logo UPT](media/logo-upt.png)
+
+
 **UNIVERSIDAD PRIVADA DE TACNA**
 
 **FACULTAD DE INGENIERÍA**
