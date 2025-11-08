@@ -1,7 +1,7 @@
-![Logo UPT](./media/upt-logo-1.png)		![Logo EPIS](./media/epis-logo.png)
+![Logo UPT](media/upt-logo-1.png)		![Logo EPIS](media/epis-logo.png)
 
-![Encabezado](./media/header.png)
-![Logo UPT](./media/logo-upt.png)
+![Encabezado](media/header.png)
+![Logo UPT](media/logo-upt.png)
 **UNIVERSIDAD PRIVADA DE TACNA**
 
 **FACULTAD DE INGENIERÍA**
@@ -358,13 +358,13 @@ En conjunto, el proyecto se alinea con los compromisos de la Universidad Privada
 
 5\.1.2 Criterios de Inversión
 
-![Gráfico 1](./media/chart-1.png)
+![Gráfico 1](media/chart-1.png)
 
-![Gráfico 2](./media/chart-2.png)
+![Gráfico 2](media/chart-2.png)
 
-![Gráfico 3](./media/chart-3.png)
+![Gráfico 3](media/chart-3.png)
 
-![Gráfico 4](./media/chart-4.png)
+![Gráfico 4](media/chart-4.png)
 
 
 
