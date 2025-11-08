@@ -1,30 +1,51 @@
 terraform {
   required_version = ">= 1.0"
   required_providers {
-    google = {
-      source  = "hashicorp/google"
-      version = "~> 4.75"
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 3.75.0"
     }
   }
-  backend "gcs" {
-    # Se configurará vía -backend-config en CI
+  backend "azurerm" {
+    # Se configurará vía variables de entorno o backend-config
   }
 }
 
-provider "google" {
-  # Use variables so the configuration is reusable and doesn't store secrets in the repo.
-  # Authentication should be provided via one of the supported methods:
-  #  - Set the environment variable GOOGLE_CREDENTIALS with the JSON contents of a service account key,
-  #  - Or run `gcloud auth application-default login` and rely on ADC,
-  #  - Or set a credentials file and use `credentials = file("/path/to/key.json")` here (not recommended in repo).
-  project = var.project_id
-  region  = var.region
+provider "azurerm" {
+  features {}
 }
 
-resource "google_firestore_database" "default" {
-  name        = "(default)"
-  # Confirm the correct Firestore location for your project. Common values: "us-central" or a multi-region like "nam5".
-  # If you're unsure, check the GCP Console or use the gcloud CLI to list supported locations.
-  location_id = var.firestore_location
-  type        = "FIRESTORE_NATIVE"
+# Resource Group
+resource "azurerm_resource_group" "voluntariado" {
+  name     = "rg-voluntariado-${var.environment}"
+  location = var.location
+  tags = {
+    Environment = var.environment
+    Project     = "Voluntariado UPT"
+  }
+}
+
+# App Service Plan (Gratuito F1 para desarrollo)
+resource "azurerm_service_plan" "voluntariado" {
+  name                = "asp-voluntariado-${var.environment}"
+  location            = azurerm_resource_group.voluntariado.location
+  resource_group_name = azurerm_resource_group.voluntariado.name
+  os_type            = "Linux"
+  sku_name           = "F1" # Free tier para desarrollo
+}
+
+# Web App para Java JSP
+resource "azurerm_linux_web_app" "voluntariado" {
+  name                = "webapp-voluntariado-${var.environment}"
+  location            = azurerm_resource_group.voluntariado.location
+  resource_group_name = azurerm_resource_group.voluntariado.name
+  service_plan_id     = azurerm_service_plan.voluntariado.id
+
+  site_config {
+    application_stack {
+      java_server         = "TOMCAT"
+      java_server_version = "9.0"
+      java_version        = "17"
+    }
+  }
 }

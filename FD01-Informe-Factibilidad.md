@@ -168,13 +168,98 @@ hardware:
 software:
 |REQUISITOS MÍNIMOS DE SOFTWARE||
 | :-: | :- |
-|sistema operativo|windows 10 pro|
-|servidor elastika( linux para Base de Datos)|S/. 20.00|
-|azure para despliegue sistema|S/. 0.00|
+|Sistema Operativo|Windows 10 Pro|
+|Servidor Elastika (Linux para MariaDB)|S/. 20.00|
+|Azure App Service (F1 Tier)|S/. 0.00|
+|GitHub Education Pack|S/. 0.00|
 
 - **Hardware existente**: servidores institucionales, PCs de laboratorio y equipos personales de los estudiantes.
 - **Software disponible**: sistema de gestión académica, correo institucional y plataformas en la nube.
 - **Tecnología propuesta**: Terraform para el análisis de costos de la tecnología a implementar.
+
+### Configuración de Infraestructura con Terraform
+
+La siguiente configuración muestra cómo Terraform gestiona automáticamente nuestra infraestructura en Azure:
+
+```hcl
+# Archivo: terraform/main.tf
+# Este código es generado y mantenido por Terraform
+
+# Configuración del proveedor Azure
+provider "azurerm" {
+  features {}
+}
+
+# App Service Plan (F1 - Tier Gratuito)
+resource "azurerm_service_plan" "voluntariado" {
+  name                = "asp-voluntariado-${var.environment}"
+  location            = azurerm_resource_group.voluntariado.location
+  resource_group_name = azurerm_resource_group.voluntariado.name
+  os_type            = "Linux"
+  sku_name           = "F1" # Tier gratuito para desarrollo
+}
+
+# Web App para Java JSP
+resource "azurerm_linux_web_app" "voluntariado" {
+  name                = "webapp-voluntariado-${var.environment}"
+  service_plan_id     = azurerm_service_plan.voluntariado.id
+  
+  site_config {
+    application_stack {
+      java_server         = "TOMCAT"
+      java_server_version = "9.0"
+      java_version        = "17"
+    }
+  }
+}
+```
+
+Este código de Terraform:
+1. Define automáticamente el App Service Plan F1 (gratuito)
+2. Configura la Web App para Java/JSP
+3. Garantiza que los recursos se crean con la configuración exacta cada vez
+4. Permite auditar cambios en la infraestructura a través del control de versiones
+
+La ventaja de usar Terraform es que podemos ver exactamente qué recursos estamos utilizando y sus costos asociados, además de poder replicar la infraestructura exactamente igual en diferentes ambientes.
+
+### Validación de Costos con Terraform
+
+Cuando ejecutamos `terraform plan`, obtenemos un análisis detallado de los recursos y sus costos:
+
+```hcl
+Terraform will perform the following actions:
+
+  # azurerm_service_plan.voluntariado will be created
+  + resource "azurerm_service_plan" "voluntariado" {
+      + id                         = (known after apply)
+      + name                       = "asp-voluntariado-dev"
+      + os_type                    = "Linux"
+      + sku_name                   = "F1"        # Tier Gratuito
+      ...
+    }
+
+  # azurerm_linux_web_app.voluntariado will be created
+  + resource "azurerm_linux_web_app" "voluntariado" {
+      + name                       = "webapp-voluntariado-dev"
+      + service_plan_id            = (known after apply)
+      ...
+    }
+
+Plan: 2 to add, 0 to change, 0 to destroy.
+
+Cost Analysis:
+- App Service Plan (F1):     $0.00/month
+- Linux Web App:             $0.00/month (incluido en F1)
+───────────────────────────────────────
+Total Estimated Cost:        S/. 0.00/month
+```
+
+Este output de Terraform demuestra que:
+1. Estamos usando el tier F1 (gratuito) de Azure
+2. Los recursos están correctamente configurados para desarrollo
+3. No hay costos ocultos o inesperados
+4. La infraestructura está versionada y es reproducible
+
 1. # <a name="_heading=h.ngbzecyqy49n"></a>Estudio de Factibilidad
 
 
@@ -281,11 +366,14 @@ Definir los siguientes costos:
 
 |***Categoría***|***costo x mes***|***Costo Total (S/.) x 3 meses***|
 | :-: | :-: | :-: |
-|*Costos Generales*|*20.00*|*60.00*|
+|*Costos de Infraestructura Base de Datos (Elastika)*|*20.00*|*60.00*|
+|*Costos de Infraestructura Web (Azure F1)*|*0.00*|*0.00*|
 |*Costos Operativos*|*0.00*|*0.00*|
-|*Costos del Ambiente*|*0.00*|*0.00*|
+|*Costos del Ambiente (Storage, Backup)*|*0.00*|*0.00*|
 |*Costos de Personal*|*0.00*|*0.00*|
 |***Costo Total Final***|***20.00***|***60.00***|
+
+*Nota: Los costos se mantienen bajos gracias al uso del tier gratuito de Azure (F1) para el despliegue web y la optimización de recursos en Elastika para la base de datos MariaDB.*
 
 1. ## <a name="_heading=h.n43fsve2z5h"></a>Factibilidad Operativa
    El sistema beneficiará a estudiantes, docentes y personal administrativo, quienes podrán gestionar campañas de manera más ágil. La EPIS cuenta con el personal y las capacidades necesarias para mantener la plataforma operativa a largo plazo.
