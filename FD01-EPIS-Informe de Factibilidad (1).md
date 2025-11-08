@@ -1,7 +1,7 @@
-﻿![](Aspose.Words.4eab529d-b355-4921-9f17-d0aac40a9e70.001.png)		![](Aspose.Words.4eab529d-b355-4921-9f17-d0aac40a9e70.002.png)
+![./media/media/image1.png](Aspose.Words.4eab529d-b355-4921-9f17-d0aac40a9e70.001.png)		![./media/media/image1.png](Aspose.Words.4eab529d-b355-4921-9f17-d0aac40a9e70.002.png)
 
-![C:\Users\EPIS\Documents\upt.png](Aspose.Words.4eab529d-b355-4921-9f17-d0aac40a9e70.003.png)
-
+![./media/media/image1.png](Aspose.Words.4eab529d-b355-4921-9f17-d0aac40a9e70.003.png)
+![./media/media/image1.png](./media/logo-upt.png)
 **UNIVERSIDAD PRIVADA DE TACNA**
 
 **FACULTAD DE INGENIERÍA**
